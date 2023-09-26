@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.*;
 public class HelloController {
 
     public static String createMessage(String name, String language) {
+        String greeting = "<strong> <font size=36>";
         if (language.equals("english")) {
-            return "Hello, " + name + "!";
+            greeting += "Hello, " + name + "!";
         } else if (language.equals("spanish")) {
-            return "Hola, " + name + "!";
+            greeting += "Hola, " + name + "!";
         } else if (language.equals("french")) {
-            return "Bonjour, " + name + "!";
+            greeting += "Bonjour, " + name + "!";
         } else if (language.equals("german")) {
-            return "Hallo, " + name + "!";
+            greeting += "Hallo, " + name + "!";
         } else { //language == mandarin
-            return "Ni hao, " + name + "!";
+            greeting += "Ni hao, " + name + "!";
         }
+        return greeting += "</font></strong>";
     }
     @GetMapping("form")
     public String helloFormWithLanguage() {
