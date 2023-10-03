@@ -1,0 +1,22 @@
+<DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelef.org/">
+<head>
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+
+    <form action='hello' method='post'>
+        <input type='text' name='name' />
+        <select name='language' >
+            <th:block th:each="item : ${languages}">
+                <option  value="${item}" th:text="${item}">Language</option>
+            </th:block>
+        </select>
+        <input type='submit' value='Greet me!'>
+    </form>
+
+
+</body>
+</html>
+</DOCTYPE>

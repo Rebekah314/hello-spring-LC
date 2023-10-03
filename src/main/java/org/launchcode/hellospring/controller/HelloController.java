@@ -1,12 +1,17 @@
 package org.launchcode.hellospring.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
-@ResponseBody
-public class HelloController {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+@Controller
+
+public class HelloController {
+    @ResponseBody
     public static String createMessage(String name, String language) {
         String greeting = "<strong> <font size=36>";
         if (language.equals("english")) {
@@ -23,30 +28,35 @@ public class HelloController {
         return greeting += "</font></strong>";
     }
     @GetMapping("form")
-    public String helloFormWithLanguage() {
-        return "<html>" +
-                "<body>" +
-                "<form action='hello' method='post'>" +
-                "<input type='text' name='name'>" +
-                "<select name='language'>" +
-                "<option value='english'>English</option>" +
-                "<option value='spanish'>Spanish</option>" +
-                "<option value='french'>French</option>" +
-                "<option value='german'>German</option>" +
-                "<option value='mandarin'>Mandarin</option>" +
-                "</select>" +
-                "<input type='submit' value='Greet me!'>" +
-                "</form>" +
-                "</body>" +
-                "</html>";
+    public String helloFormWithLanguage(Model model) {
+
+
+        List<String> languages = new ArrayList<>();
+        languages.add("English");
+        languages.add("Spanish");
+        languages.add("French");
+        languages.add("German");
+        languages.add("Mandarin");
+
+        model.addAttribute("languages", languages);
+        return "form";
     }
 
     @RequestMapping(method={RequestMethod.GET, RequestMethod.POST}, value="hello")
-    public String displayMessage(@RequestParam String name, @RequestParam String language) {
+    public String displayMessage(@RequestParam String name, @RequestParam String language, Model model) {
+        HashMap<String, String> greetings = new HashMap<>();
+        greetings.put("English", "Hello");
+        greetings.put("Spanish", "Hola");
+        greetings.put("French", "Bonjour");
+        greetings.put("German", "Hallo");
+        greetings.put("Mandarin", "Ni hao");
+
         if (name.equals("")) {
             name = "World";
         }
-        return createMessage(name, language);
+        model.addAttribute("name", name);
+        model.addAttribute("greeting", greetings.get(language));
+        return "hello-message";
 
     }
 
